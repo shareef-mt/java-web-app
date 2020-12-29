@@ -44,7 +44,7 @@ pipeline {
                 '''
                 script {
                     sh 'docker version'
-		    docker.build('$IMAGE')
+		    sh 'docker.build('$IMAGE')'
 		   // sh 'docker build -t 683294139580.dkr.ecr.us-east-1.amazonaws.com/sample-java:${VERSION} .'
                 }
             }
