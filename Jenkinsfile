@@ -44,7 +44,7 @@ pipeline {
                 '''
                 script {
                     sh 'docker version '
-                    docker.build('$IMAGE')
+                    sh 'docker.build('$IMAGE')'
                 }
             }
         }
