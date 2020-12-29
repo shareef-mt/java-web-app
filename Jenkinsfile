@@ -67,7 +67,7 @@ pipeline {
                     docker.withRegistry(ECRURL, ECRCRED)
                         {
                             sh 'aws ecr put-image-scanning-configuration --repository-name sample-java --image-scanning-configuration scanOnPush=true --region us-east-1'
-				docker.image('sample-java:latest').push()
+			    sh 'docker push sample-java/sample-java:${VERSION}'
                  
                         }
                 }
