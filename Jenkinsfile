@@ -1,7 +1,7 @@
 pipeline {
     environment {
         VERSION = "latest"
-        PROJECT = "sample-java"
+        PROJECT = "683294139580.dkr.ecr.us-east-1.amazonaws.com/sample-java"
         IMAGE = "$PROJECT:$VERSION"
         ECRURL = "https://683294139580.dkr.ecr.us-east-1.amazonaws.com/sample-java"
         ECRCRED = "ecr:us-east-1:aws_credentials"
@@ -26,7 +26,7 @@ pipeline {
         stage('SCM Checkout') {
             steps {
             // Get source code from Gitlab repository
-                checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github_cred', url: 'https://github.com/shareef-mt/sample-java.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: '']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'github_cred', url: 'https://github.com/shareef-mt/java-web-app.git']]])
             }
         }
        
@@ -43,8 +43,9 @@ pipeline {
                     echo "PATH = ${IMAGE}"
                 '''
                 script {
-                    sh 'docker version '
-                    docker.build('$IMAGE')
+                    sh 'docker version'
+		    docker.build('$IMAGE')
+		   // sh 'docker build -t 683294139580.dkr.ecr.us-east-1.amazonaws.com/sample-java:${VERSION} .'
                 }
             }
         }
@@ -66,8 +67,10 @@ pipeline {
                 script {
                     docker.withRegistry(ECRURL, ECRCRED)
                         {
+			    //sh 'aws ecr get-login-password --region us-east-1 | docker login --username shareef.ahamadn242@gmail.com --password-stdin $H@reef@786 683294139580.dkr.ecr.region.amazonaws.com'
                             sh 'aws ecr put-image-scanning-configuration --repository-name sample-java --image-scanning-configuration scanOnPush=true --region us-east-1'
-                            docker.image(IMAGE).push()
+			    docker.image(IMAGE).push()
+			    //sh 'docker push 683294139580.dkr.ecr.us-east-1.amazonaws.com/sample-java:${VERSION}'
                  
                         }
                 }
