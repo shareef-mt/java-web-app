@@ -61,16 +61,16 @@ pipeline {
                     }
                 }
             }
-        }	
+        }
+	    
         stage('Scanning & Pushing Docker Image into Aws Repo') {
             steps {
                 script {
                     docker.withRegistry(ECRURL, ECRCRED)
                         {
-			    //sh 'aws ecr get-login-password --region us-east-1 | docker login --username shareef.ahamadn242@gmail.com --password-stdin $H@reef@786 683294139580.dkr.ecr.region.amazonaws.com'
+			    sh 'aws ecr get-login-password --region us-east-1 | docker login --username shareef.ahamadn242@gmail.com --password-stdin $H@reef@786 683294139580.dkr.ecr.region.amazonaws.com'
                             sh 'aws ecr put-image-scanning-configuration --repository-name sample-java --image-scanning-configuration scanOnPush=true --region us-east-1'
-			    docker.image(IMAGE).push()
-			    //sh 'docker push 683294139580.dkr.ecr.us-east-1.amazonaws.com/sample-java:${VERSION}'
+			    sh 'docker push 683294139580.dkr.ecr.us-east-1.amazonaws.com/sample-java:${VERSION}'
                  
                         }
                 }
