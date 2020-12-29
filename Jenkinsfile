@@ -44,7 +44,7 @@ pipeline {
                 '''
                 script {
                     sh 'docker version'
-			docker.build('$IMAGE')
+		    docker.build('$IMAGE')
 		   // sh 'docker build -t 683294139580.dkr.ecr.us-east-1.amazonaws.com/sample-java:${VERSION} .'
                 }
             }
@@ -69,7 +69,7 @@ pipeline {
                         {
 			    //sh 'aws ecr get-login-password --region us-east-1 | docker login --username shareef.ahamadn242@gmail.com --password-stdin $H@reef@786 683294139580.dkr.ecr.region.amazonaws.com'
                             sh 'aws ecr put-image-scanning-configuration --repository-name sample-java --image-scanning-configuration scanOnPush=true --region us-east-1'
-				docker.image(IMAGE).push()
+			    docker.image(IMAGE).push()
 			    //sh 'docker push 683294139580.dkr.ecr.us-east-1.amazonaws.com/sample-java:${VERSION}'
                  
                         }
