@@ -44,7 +44,7 @@ pipeline {
                 '''
                 script {
                     sh 'docker version '
-			sh 'docker build -t sample-java:${VERSION} .'
+			sh 'docker build -t 683294139580.dkr.ecr.us-east-1.amazonaws.com/sample-java:${VERSION} .'
                 }
             }
         }
@@ -67,7 +67,7 @@ pipeline {
                     docker.withRegistry(ECRURL, ECRCRED)
                         {
                             sh 'aws ecr put-image-scanning-configuration --repository-name sample-java --image-scanning-configuration scanOnPush=true --region us-east-1'
-			    sh 'docker push sample-java/sample-java:${VERSION}'
+				sh 'docker push 683294139580.dkr.ecr.us-east-1.amazonaws.com/sample-java:${VERSION}'
                  
                         }
                 }
