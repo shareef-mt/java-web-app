@@ -44,7 +44,7 @@ pipeline {
                 '''
                 script {
                     sh 'docker version '
-                    sh 'docker.build('$IMAGE')'
+			sh 'docker build -t sample-java:${VERSION} .'
                 }
             }
         }
